@@ -19,9 +19,10 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^search/', include('apps.search.urls', namespace="search")),
-    url(r'^members/', include('apps.sitters.urls', namespace="sitter")),
-    url(r'^$', RedirectView.as_view(url='/search/')),
+    url(r'^', include('ce_ledger.urls')),
+    #url(r'^search/', include('apps.search.urls', namespace="search")),
+    #url(r'^members/', include('apps.sitters.urls', namespace="sitter")),
+    #url(r'^$', RedirectView.as_view(url='/search/')),
 ]
 
 # Add Django site authentication urls (for login, logout, password management)
