@@ -38,6 +38,9 @@ class Provider(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 '''
     Continuing Education Course catalog
@@ -67,3 +70,6 @@ class Course(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = CourseManager()
+
+    def __unicode__(self):
+        return self.name
