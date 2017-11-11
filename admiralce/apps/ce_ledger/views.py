@@ -5,3 +5,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request,'layouts/index.html')
+
+def courses(request):
+    return render(request,'ce_ledger/courses.html')
