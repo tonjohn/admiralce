@@ -49,18 +49,38 @@ table {
 
 /* css grid */
 
+/* Mobile */
 .wrapper{
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas:
-    "header header header header header header header header header header header header"
-    "main main main main main main main main sidebar sidebar sidebar sidebar"
-    "footer footer footer footer footer footer footer footer footer footer footer footer";
+    "header header header"
+    "main main main"
+    "sidebar sidebar sidebar"
+    "footer footer footer";
     grid-gap: 5px;
     max-width: 960px;
     margin: 0 auto;
 }
+
+/* Desktop */
+@media only screen and (min-width: 769px){ 
+    .wrapper{
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: 1fr;
+        grid-template-areas:
+        "header header header header header header header header header header header header"
+        "main main main main main main main main sidebar sidebar sidebar sidebar"
+        "footer footer footer footer footer footer footer footer footer footer footer footer";
+        grid-gap: 5px;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+     
+}
+
 
 header{
     grid-area: header;
