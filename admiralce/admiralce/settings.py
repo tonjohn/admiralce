@@ -35,9 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.ce_ledger',
     'apps.users',
-    'apps.sitters',
-    'apps.search'
+    # 'apps.sitters',
+    # 'apps.search'
 ]
 
 MIDDLEWARE = [
@@ -123,4 +124,4 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
 
-LOGIN_REDIRECT_URL = '/search'
+# LOGIN_REDIRECT_URL = '/search'
