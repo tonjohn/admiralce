@@ -5,9 +5,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Dog(models.Model):
+class PracticeAddress(models.Model):
     name = models.CharField(max_length=30)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="dogs")
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=30)
+    zipcode = models.IntegerField(blank=True, null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="practices")
     # breed = models.ForeignKey(Breed)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -50,27 +54,9 @@ class User(AbstractUser):
     """
 
     @property
-    def calc_sitter_ranking(self):
-        review_count = self.reviews_received.count()
+    def current_credits(self):
+        # review_count = self.reviews_received.count()
         # print "Review Count", review_count
 
-        sitter_ranking = self.calc_sitter_score()
-        # print "Sitter Score", sitter_ranking
-
-        if review_count > 0:
-            ratings_score = self.calc_ratings_score()
-            if review_count >= 10:
-                sitter_ranking = ratings_score
-            else:
-                # print "Is this thing on?"
-                pct_stays = review_count / 10.00
-                # print "pct_stays", pct_stays
-                weighted_sitter_score = sitter_ranking * (1 - pct_stays)
-                # print "weighted sitter score", weighted_sitter_score
-                weighted_ratings_score = ratings_score * pct_stays
-                # print "weighted ratings score", weighted_ratings_score
-                sitter_ranking = weighted_ratings_score + weighted_sitter_score
-
-        self.sitter_profile.rank = sitter_ranking
         # print "Sitter Ranking", sitter_ranking
-        return sitter_ranking
+        return 10
