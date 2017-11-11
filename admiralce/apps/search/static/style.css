@@ -1,0 +1,70 @@
+.brand {
+	color: #00bd70;
+}
+
+a {
+	color: #14a4be;
+}
+
+
+
+body {
+	background: #ebeeef;
+	margin:0;
+}
+
+header {
+	background: white;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+main {
+	width: 80%;
+	margin: 0 auto;
+}
+
+main#login {
+	width: 450px;
+}
+
+section {
+	background: white;
+	padding: 10px;
+}
+
+
+
+.mini-profile {
+	border-bottom: 1px solid #ddd;
+}
+
+.mini-profile:hover {
+	box-shadow: inset 4px 0 0 0 #da6a18;
+}
+
+.mini-profile img.avatar {
+	display: inline-block;
+	max-width: 120px;
+	margin-right: 20px;
+}
+
+.mini-profile .info {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.mini-profile blockquote {
+	color: black;
+}
+
+section.controls {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+section.controls > div {
+	display: inline-block;
+	margin-right: 20px;
+}
+

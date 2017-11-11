@@ -1,0 +1,21 @@
+<a href="{% url 'sitter:profile' slug=result.url %}">
+    <section class="mini-profile" data-rank="{{ result.ratings_score | floatformat:0 }}">
+        <div>
+            <img class="avatar"  src="http://placekitten.com/g/500/500?user={{ result.user_id }}">
+            <div class="info">
+                <h2>{{ result.user.first_name }}</h2>
+                <div>
+                    <div>{{ result.user.reviews_received.all.count }} reviews</div>
+                    {{ result.ratings_score | floatformat:0 }} stars
+                </div>
+            </div>
+        </div>
+
+        <div class="example-review">
+
+            <blockquote>
+                "{{ result.user.reviews_received.first.review_text | truncatewords:50 }}"
+            </blockquote>
+        </div>
+    </section>
+</a>

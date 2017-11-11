@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block title %}{{ sitter.user.first_name }}{% endblock %}
+
+{% block main_content %}
+<main>
+    <section class="mini-profile" data-rank="{{ sitter.rank | floatformat:0 }}">
+        <div>
+            <img class="avatar"  src="http://placekitten.com/g/500/500?user={{ sitter.user.id }}">
+            <div class="info">
+                <h2>{{ sitter.user.first_name }}</h2>
+                <div>
+                    <div>{{ sitter.user.reviews_received.all.count }} reviews</div>
+                    {{ sitter.rank | floatformat:0 }} stars
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <div class="ui comments">
+            <h3 class="ui dividing header">Reviews</h3>
+            {% for review in sitter.user.reviews_received.all %}
+                {% include 'partials/review.html' %}
+            {%  endfor %}
+        </div>
+</main>
+{% endblock %}

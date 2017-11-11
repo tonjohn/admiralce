@@ -1,0 +1,71 @@
+{% extends "base_generic.html" %}
+
+{% block main_content %}
+    {% load staticfiles %}
+<main id="login">
+
+
+<div class="ui middle aligned center aligned grid">
+		<div class="column">
+			<h2 class="ui teal image header">
+				<img src="{% static 'img/rover-favicon.png' %}" class="ui circular image">
+				<div class="content">
+					{{ "Sign In to your account" | title }}
+				</div>
+			</h2>
+            {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.</p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %}
+                {% endif %}
+			<form id="login "class="ui large form" action='{% url 'auth:login' %}' method='post'>
+                {% csrf_token %}
+				<div class="ui stacked segment">
+                    {{ form.username.label_tag }}
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="user icon"></i>
+							{{ form.username }}
+						</div>
+					</div>
+
+                    {{ form.password.label_tag }}
+					<div class="field">
+						<div class="ui left icon input">
+							<i class="lock icon"></i>
+							  {{ form.password }}
+						</div>
+					</div>
+{#					<div class="ui fluid large teal submit button">Login</div>#}
+                    <input class="ui fluid large teal submit button" type="submit" value="Sign In" />
+                    <input type="hidden" name="next" value="" />
+				</div>
+
+				<div class="ui error message">
+					{% if messages %}
+						<ul class="list">
+						{% for msg in messages %}
+							<li class="{{msg.level_tag}}">{{msg.message}}</li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+
+			</form>
+
+{#			<div class="ui message">#}
+{#				New to us? <a href="">Sign Up</a>#}
+{#			</div>#}
+
+		</div>
+	</div>
+</main>
+
+{% endblock %}

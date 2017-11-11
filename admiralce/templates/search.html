@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block main_content %}
+<main>
+    <section class="controls">
+        <div>
+            <h4>Filter by Rating</h4>
+            <input id="rank-filter" type="range" max="5" min="0" value="0">
+        </div>
+        <div>
+            <h2 id="filter-results-label">All Results</h2>
+            <div id="results-count">Showing <span>{{ search_results.count }}</span> of {{ search_results.count }}</div>
+        </div>
+
+    </section>
+
+    {% for result in search_results %}
+        {% include 'partials/search_result.html' %}
+    {% endfor %}
+</main>
+{% endblock %}

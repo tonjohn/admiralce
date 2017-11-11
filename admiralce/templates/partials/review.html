@@ -1,0 +1,14 @@
+<div class="comment">
+    <a class="avatar">
+        <img src="http://placekitten.com/g/500/500?user={{ review.owner.id }}">
+    </a>
+    <div class="content">
+        <a class="author">{{ review.owner.first_name }}</a>
+        <div class="metadata">
+            <span class="date">{{ review.end_date|timesince }} ago</span>
+        </div>
+        <div class="text">
+            {{ review.review_text }}
+        </div>
+    </div>
+</div>
