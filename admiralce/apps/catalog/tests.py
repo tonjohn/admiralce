@@ -2,12 +2,22 @@ from django.utils import timezone
 from django.test import TestCase
 from django.utils.text import slugify
 
-from .models import Sitter, Review
+from .models import Provider, Course
 from ..users.models import User
 
 
 class ReviewTest(TestCase):
     users = []
+    providers = [
+        Provider.objects.create(
+            username="tonjohn",
+            email="a@a.a",
+            first_name="Qwertyuiopas",
+            last_name="J.",
+            zipcode=98034
+        ),
+    ]
+    courses = []
 
     def setUp(self):
         # Create some test users
