@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div class="wrapper">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Admiral Homepage</title>
+            {% load static %}
+            
+            
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        
+            <link rel="stylesheet" type="text/css" href="{% static 'ce_ledger/style.css' %}">
+        </head>
+
+        <body>
+
+            {% block header %}
+            <header>
+                <h1>The Admiral</h1>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'courses' %}">Courses</a></li>
+                    </ul>   
+                </nav>
+            </header>
+            {% endblock %}
+            
+            <main>
+                {% block content %}
+
+                    <p>Nothing to read into there! Prepare to be emancipated from your own inferior genes! Nice one, Ms Pancakes. Dont mind those stare goblins.</p>
+                            
+                    <p>I'd like to order one large phone with extra phones please. cell phone, no no no rotary... and payphone on half. That just sounds like slavery with extra steps. You have to turn them on Morty! The shoes need to be turned on! Uh ohhh! Somersault jump!</p>
+                            
+                    <p>That just sounds like slavery with extra steps. These 2 halves don't belong together, bitch! I'd like to order one large sofa chair with extra chair please. high chair, no no no recliner... and wheelchair on half. I don't get it and I don't need to.</p>
+                            
+                    <p>Snuffles want to be understood. Snuffles need to be understood. And that's why I always say 'Shumshumschilpiddydah!' Not for the men they cheat on. Morty! The principal and I have discussed it, a-a-and we're both insecure enough to agree to a three-way!</p>
+                            
+                {% endblock %}
+            </main>
+
+           
+            <div class="sidebar">
+                {% block sidebar %}
+                <h2>Sidebar Links!</h2>
+                <ul>
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                    <li><a href="#">Link 4</a></li>
+                </ul>
+                {% endblock %}
+            </div>
+            
+
+            {% block footer %}
+            <footer>
+                <p>Copyright stuff, maybe some links</p>
+            </footer>
+            {% endblock %}
+        </div>  <!-- end wrapper --> 
+    </body>
+
+</html>
