@@ -31,7 +31,7 @@ class CourseManager(models.Manager):
 
 
 class Provider(models.Model):
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255)
     base_url = models.URLField(blank=True)
     # catalog_urls = csv or another table?
     slug = models.SlugField(blank=True, null=True)
@@ -55,8 +55,8 @@ class Course(models.Model):
     credits = models.FloatField(
         default=0, blank=True
     )
-    fee = models.FloatField(
-        default=0, blank=True
+    fee = models.DecimalField(
+        default=0, blank=True, max_digits=8, decimal_places=2,
     )
     url = models.URLField(blank=True, null=True)
     speaker = models.CharField(max_length=255, blank=True)  # TODO: make speakers a FK

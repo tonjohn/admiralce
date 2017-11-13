@@ -24,18 +24,14 @@ for row in bacon:
     title = row.find('a','CoveoResultLink').get_text()
     details = row.find_all('span', class_=False)
     course_info.append(title.encode('utf-8'))
-  #  print details.get_text()
- #   if details.get_text() == "To"
-  #      details.pop(3)
+
     for x in range(0, len(details)):
-        # print details[x].get_text()
-        #    print "FOUND A TO!"
- #           details.pop(x)
+
         if not details[x].get_text() == " To ":
-       # if details[x].get_text(): 
-            the_goods = details[x].get_text()
-            course_info.append(the_goods.encode('utf-8'))
-    list_of_courses.append(course_info)
+            if details[x].get_text():
+                the_goods = details[x].get_text()
+                course_info.append(the_goods.encode('utf-8'))
+        list_of_courses.append(course_info)
 print list_of_courses
 
 outfile = open("./ada.csv", "wb")

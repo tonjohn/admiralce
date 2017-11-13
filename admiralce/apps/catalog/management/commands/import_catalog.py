@@ -2,95 +2,70 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 import csv
 import re
-from apps.users.models import User, Dog
-from apps.sitters.models import Review, Sitter
+from apps.users.models import User
+from apps.catalog.models import Provider, Course
 
 USERID_REGEX = re.compile(r'user=(\d+)')
 
 
 class Command(BaseCommand):
-    help = 'Imports recovered review data'
+    help = 'Imports data from scraper'
 
     def handle(self, *args, **options):
         counter = 0
         print "Opening CSV..."
-        with open('../reviews.csv') as f:
+        with open('ada.csv') as f:
             is_header = True
             reader = csv.reader(f)
             """
                 CSV format:
-                0rating	1sitter_image	2end_date	3text	4owner_image
-                5dogs	6sitter	7owner	8start_date
+                    0) Title
+                    1) Subject
+                    2) Dates
+                    3) Location
+                    4) Cost
+                    5) Provider
+                    6) Type
+                    7) Description
+                    8) Website
             """
             for row in reader:
                 counter += 1
                 if not is_header:
-                    rating, sitter_image, end_date,\
-                        review_text, owner_image, dogs,\
-                        sitter, owner, start_date = row
-                    # Sitter
-                    user_id = USERID_REGEX.search(sitter_image).group(1)
-                    fn = sitter[:len(sitter) - 3].strip()
-                    ln = sitter[-2:].strip()
-                    user_sitter, created = User.objects.get_or_create(
-                        pk=user_id,
+                    title, subject, dates,\
+                        location, cost_string, provider_name,\
+                        event_type, description, provider_url, test = row
+                    # Provider
+                    obj_provider, created = Provider.objects.get_or_create(
+                        name=provider_name,
                         defaults={
-                            'first_name': fn,
-                            'last_name': ln,
-                            'zipcode': 0,
-                            'username': fn + ln + user_id,
-                            'email': ""
-                        }
-                    )
-                    if created:
-                        # new sitter so we should create a profile for them
-                        slug_fields = [user_id, fn, ln]
-                        Sitter.objects.create(
-                            user=user_sitter, url=slugify(
-                                ' '.join(slug_fields)
-                            )
-                        )
-
-                    # Owner
-                    user_id = USERID_REGEX.search(owner_image).group(1)
-                    fn = owner[:len(owner) - 3].strip()
-                    ln = owner[-2:].strip()
-                    user_owner, created = User.objects.get_or_create(
-                        pk=user_id,
-                        defaults={
-                            'first_name': fn, 'last_name': ln,
-                            'zipcode': 0,
-                            'username': fn + ln + user_id,
-                            'email': ""
+                            'name': provider_name,
+                            'base_url': provider_url,
                         }
                     )
 
-                    # Dogs
-                    for dog in dogs.split('|'):
-                        new_dog, created = Dog.objects.get_or_create(
-                            owner=user_owner, name=dog.strip()
-                        )
+                    cost_string = cost_string.strip()
+                    cost = 0.00
+                    if len(cost_string) > 0:
+                        cost = float(cost_string.split(' ', 1)[0])
+                    print "COST: ",'%.2f' % cost
 
-                    # Review
-                    review = Review(
-                        review_text=review_text,
-                        end_date=end_date,
-                        start_date=start_date,
-                        sitter=user_sitter,
-                        owner=user_owner,
-                        rating=rating
+                    # Course
+                    new_course = Course(
+                        provider=obj_provider,
+                        name=title,
+                        description=description,
+                        credits=0,
+                        fee=cost,
+                        is_online=False,
                     )
-                    review.save()
+                    new_course.save()
                 else:
                     print "Parsing rows..."
                     is_header = False
 
         # Finished import, now calculate scores
-        print "Initial import complete. Calculating Sitter Rankings..."
-        sitters = Sitter.objects.all()
-        for sitter in sitters:
-            sitter.user.calc_sitter_ranking
-            sitter.save()
+        print "Initial import complete."
         self.stdout.write(
             self.style.SUCCESS('Successfully parsed %s records' % counter)
         )
