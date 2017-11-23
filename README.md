@@ -1,5 +1,6 @@
 # AdmiralCE
 Helping Medical Professionals to navigate the CE
+
 ![Homepage Mockup](docs/img/Homepage.png)
 
 ## Getting Started
