@@ -1,37 +1,78 @@
 import csv
 import requests
-from BeautifulSoup import BeautifulSoup
+from selenium import webdriver
+from bs4 import BeautifulSoup
 
-url = 'http://www.ada.org/en/ccepr/find-ce-courses#sort=date%20descending' 
+list_of_courses = []
 
-# url = 'https://ebusiness.cda.org/ebusiness/speaker/Speakerschedule'
+for i in range (1, 16):
+    if(i == 1):
+        url = 'https://www.dentalcare.com/en-us/professional-education/ce-courses?keywords=' 
 
-# url ='https://dental.washington.edu/continuing-dental-education/8/' #403 forbidden
-
-# url='http://www.vetstreet.com/cats/'
-# soup = BeautifulSoup(requests.get(url).text)
-
-response = requests.get(url)
-html = response.content
-
-soup = BeautifulSoup(html)
-
-print soup
-# table = soup.find('table', attrs={'id':"MainContentAreaPlaceHolder_C001_grdSpeakerdetails"})
-# print table
+    url = 'https://www.dentalcare.com/en-us/professional-education/ce-courses?keywords=&currentpage=' + str(i)
 
 
-# table = soup.find('tbody', attrs={'class': "stripe"})
+    browser = webdriver.PhantomJS()
+    browser.get(url)
+    html = browser.page_source
 
-# list_of_rows = []
-# for row in table.findAll("tr")[1:]:
-#     list_of_cells = []
-#     for cell in row.findAll('td'):
-#         text = cell.text.replace('&nbsp', '')
-#         list_of_cells.append(text)
-#     list_of_rows.append(list_of_cells)
+    soup = BeautifulSoup(html, 'lxml')
+    bacon = soup.find_all('div', 'course-search-results-tiles')
 
-# outfile = open("./inmates2.csv", "wb")
-# writer = csv.writer(outfile)
-# writer.writerow(["Last", "First", "Middle", "Gender", "Race", "Age", "City", "State"])
-# writer.writerows(list_of_rows)
+    # print bacon
+
+    for row in bacon:
+        course_info = []
+
+        # course_info.append(row.find('a','btn-link').get_text().encode('utf-8'))
+
+        title =  row.find('span', 'course-tile-title')
+
+        for x in title:
+            try: 
+                if x.name == 'a':
+                    yay = x.get_text().encode('utf-8')
+                    course_info.append(yay)
+            except: 
+                pass
+
+        # print row.find_all('a','btn-link') #.get_text().encode('utf-8')
+        course_info.append("N/A")
+
+        start_date = row.find('span','course-tile-online-date').get_text().encode('utf-8')
+
+        end_date = row.find('span', 'course-tile-expiry-date').get_text().encode('utf-8')
+
+        dates = start_date + " - " + end_date
+
+        course_info.append(dates)
+
+        course_info.append(row.find_all('span', 'course-tile-expiry-date')[2].get_text().encode('utf-8'))
+
+        course_info.append(row.find_all('span', 'course-tile-expiry-date')[1].get_text().encode('utf-8'))
+
+        course_info.append(row.find('span', 'course-tile-education-unit').get_text().encode('utf-8'))
+
+        course_info.append(row.find('span', 'course-tile-author').get_text().encode('utf-8'))
+
+        course_info.append(row.find('span', 'course-tile-audience').get_text().encode('utf-8'))
+
+        description =  row.find('span', 'course-tile-shortdescription')
+
+        for x in description:
+            try: 
+                if x.name == 'p':
+                    nice = x.get_text().encode('utf-8')
+                    course_info.append(nice)
+            except: 
+                pass
+
+        course_info.append(row.find('a', 'btn-link')['href'].encode('utf-8'))
+
+        list_of_courses.append(course_info)
+    # print list_of_courses
+
+outfile = open("./dentalcare.csv", "wb")
+writer = csv.writer(outfile)
+writer.writerow(["Title", "Subject", "Dates", "Location", "Cost", "Hours", "Provider", "Type", "Description", "Website"])
+writer.writerows(list_of_courses)
