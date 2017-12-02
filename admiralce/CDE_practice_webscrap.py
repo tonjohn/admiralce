@@ -8,9 +8,8 @@ list_of_courses = []
 for i in range (1, 16):
     if(i == 1):
         url = 'https://www.dentalcare.com/en-us/professional-education/ce-courses?keywords=' 
-
-    url = 'https://www.dentalcare.com/en-us/professional-education/ce-courses?keywords=&currentpage=' + str(i)
-
+    else:
+        url = 'https://www.dentalcare.com/en-us/professional-education/ce-courses?keywords=&currentpage=' + str(i)
 
     browser = webdriver.PhantomJS()
     browser.get(url)
@@ -19,12 +18,8 @@ for i in range (1, 16):
     soup = BeautifulSoup(html, 'lxml')
     bacon = soup.find_all('div', 'course-search-results-tiles')
 
-    # print bacon
-
     for row in bacon:
         course_info = []
-
-        # course_info.append(row.find('a','btn-link').get_text().encode('utf-8'))
 
         title =  row.find('span', 'course-tile-title')
 
@@ -76,3 +71,33 @@ outfile = open("./dentalcare.csv", "wb")
 writer = csv.writer(outfile)
 writer.writerow(["Title", "Subject", "Dates", "Location", "Cost", "Hours", "Provider", "Type", "Description", "Website"])
 writer.writerows(list_of_courses)
+
+
+# url = "http://www.ada.org/en/ccepr/find-ce-courses#sort=relevancy"
+
+# browser = webdriver.PhantomJS()
+# browser.get(url)
+# html = browser.page_source
+# soup = BeautifulSoup(html, 'lxml')
+# bacon = soup.find_all('div', 'CoveoResult')
+
+# list_of_courses = []
+# for row in bacon:
+#     course_info = []
+#     title = row.find('a','CoveoResultLink').get_text()
+#     details = row.find_all('span', class_=False)
+#     course_info.append(title.encode('utf-8'))
+
+#     for x in range(0, len(details)):
+
+#         if not details[x].get_text() == " To ":
+#             if details[x].get_text():
+#                 the_goods = details[x].get_text()
+#                 course_info.append(the_goods.encode('utf-8'))
+#         list_of_courses.append(course_info)
+# print list_of_courses
+
+# outfile = open("./ada.csv", "wb")
+# writer = csv.writer(outfile)
+# writer.writerow(["Title", "Subject", "Dates", "Location", "Cost", "Provider", "Type", "Description", "Website"])
+# writer.writerows(list_of_courses)

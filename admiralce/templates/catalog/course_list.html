@@ -1,0 +1,47 @@
+{% extends "layouts/index.html" %}
+
+{% block content %}
+    <!-- this will be a for loop that loops through
+        the courses and displays relevant data -->
+    {% if course_list %}
+
+      {% for course in course_list %}
+          <div class="card" style="width: 100%;">
+            <img class="card-img-top" src="..." alt="">
+            <div class="card-block">
+            <h4 class="card-title">{{ course.name }}</h4>
+            <p class="card-text">{{ course.description }}</p>
+                <p class="card-text">By {{ course.provider.name }}, ${{ course.fee }} / {{ course.credits }} credits</p>
+            <a href="{% url 'course-detail' course.id %}" class="btn btn-primary">More info</a>
+            </div>
+          </div>
+      {% endfor %}
+
+    {% else %}
+      <p>There are no courses in the catalog.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+
+        <h4 class="card-title">Topics</h4>
+        <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+
+
+
+        <h4 class="card-title">Course Providers</h4>
+        <ul class="list-group">
+            {% for provider in provider_list %}
+            <li class="list-group-item">{{ provider.name }}</li>
+            {% endfor %}
+        </ul>
+
+
+{% endblock %}
